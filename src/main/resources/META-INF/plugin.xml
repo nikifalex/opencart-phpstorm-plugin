@@ -1,0 +1,92 @@
+<idea-plugin>
+    <id>ru.opencart.idea</id>
+    <name>OpenCart Toolkit</name>
+    <vendor url="https://t.me/t523651">nikifalex</vendor>
+
+    <description><![CDATA[
+        Support for OpenCart 1.5 / 2.x / 3.x / 4.x and ocStore: navigation, completion and type
+        inference for the parts of the engine that static analysis cannot see.
+        <ul>
+            <li>types for the Registry magic: <code>$this-&gt;db</code>, <code>$this-&gt;config</code>,
+                <code>$this-&gt;cart</code>, …</li>
+            <li>types for loaded models: <code>$this-&gt;model_catalog_product-&gt;getProduct()</code></li>
+            <li>navigation and completion for routes: <code>load-&gt;controller/model/view/language</code>,
+                <code>url-&gt;link</code></li>
+            <li>navigation and completion for language keys and settings</li>
+            <li>Twig: completion for controller variables</li>
+            <li>OCMOD/vQmod: navigation to targets and a check that the modification still applies</li>
+            <li>events: navigation between a trigger, the wrapped method and its handlers</li>
+            <li>OpenCart tool window with routes and event subscriptions</li>
+        </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.php</depends>
+    <depends optional="true" config-file="oc-twig.xml">com.jetbrains.twig</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <psi.referenceContributor language="PHP"
+                                  implementation="ru.opencart.idea.reference.OcReferenceContributor"/>
+        <codeInsight.lineMarkerProvider language="PHP"
+                                        implementationClass="ru.opencart.idea.marker.OcRouteLineMarkerProvider"/>
+        <completion.contributor language="PHP"
+                                implementationClass="ru.opencart.idea.completion.OcPhpCompletionContributor"/>
+
+        <localInspection language="PHP"
+                         shortName="OcUnknownRoute"
+                         displayName="OpenCart: unknown route"
+                         groupName="OpenCart"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="ru.opencart.idea.inspection.OcUnknownRouteInspection"/>
+        <localInspection language="PHP"
+                         shortName="OcModelNotLoaded"
+                         displayName="OpenCart: model used without load->model()"
+                         groupName="OpenCart"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="ru.opencart.idea.inspection.OcModelNotLoadedInspection"/>
+        <languageInjectionContributor language="PHP"
+                                      implementationClass="ru.opencart.idea.sql.OcSqlInjectionContributor"/>
+        <gotoSymbolContributor implementation="ru.opencart.idea.navigation.OcRouteGotoContributor"/>
+
+        <psi.referenceContributor language="XML"
+                                  implementation="ru.opencart.idea.ocmod.OcModReferenceContributor"/>
+        <codeInsight.lineMarkerProvider language="PHP"
+                                        implementationClass="ru.opencart.idea.marker.OcEventLineMarkerProvider"/>
+        <fileBasedIndex implementation="ru.opencart.idea.event.OcEventSubscriberIndex"/>
+        <toolWindow id="OpenCart"
+                    anchor="right"
+                    icon="AllIcons.Nodes.Plugin"
+                    factoryClass="ru.opencart.idea.toolwindow.OcToolWindowFactory"/>
+        <localInspection language="XML"
+                         shortName="OcModSearch"
+                         displayName="OCMOD/vQmod: modification will not apply"
+                         groupName="OpenCart"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="ru.opencart.idea.ocmod.OcModSearchInspection"/>
+        <localInspection language="PHP"
+                         shortName="OcUnknownLanguageKey"
+                         displayName="OpenCart: unknown language key"
+                         groupName="OpenCart"
+                         enabledByDefault="true"
+                         level="WEAK WARNING"
+                         implementationClass="ru.opencart.idea.inspection.OcUnknownLanguageKeyInspection"/>
+    </extensions>
+
+    <actions>
+        <action id="OpenCart.NewModule"
+                class="ru.opencart.idea.generator.OcNewModuleAction"
+                text="OpenCart Module..."
+                description="Create an OpenCart module skeleton: controllers, language files and template">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.jetbrains.php">
+        <typeProvider4 implementation="ru.opencart.idea.type.OcRegistryTypeProvider"/>
+        <typeProvider4 implementation="ru.opencart.idea.type.OcModelTypeProvider"/>
+    </extensions>
+</idea-plugin>

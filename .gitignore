@@ -1,0 +1,18 @@
+# Gradle / IntelliJ Platform Gradle Plugin
+.gradle/
+build/
+.intellijPlatform/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local build settings (path to an installed PhpStorm)
+local.properties
+
+# IDE
+.idea/
+*.iml
+out/
+
+# Misc
+.veai/
+.DS_Store
+*.log
