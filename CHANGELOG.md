@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+- Renamed the plugin id, the Kotlin package and the Gradle project to match the repository name:
+  `io.github.nikifalex.opencart` and `opencart-phpstorm-plugin`. The distribution archive is now
+  `opencart-phpstorm-plugin-<version>.zip`; remove the old `opencart-idea` directory from the IDE
+  plugins folder when upgrading a manual installation.
+
 ## 0.1.0
 
 First release.

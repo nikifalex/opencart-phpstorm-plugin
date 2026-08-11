@@ -1,1 +1,1 @@
-rootProject.name = "opencart-idea"
+rootProject.name = "opencart-phpstorm-plugin"

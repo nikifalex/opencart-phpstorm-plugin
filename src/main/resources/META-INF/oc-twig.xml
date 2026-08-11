@@ -1,8 +1,8 @@
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
         <completion.contributor language="Twig"
-                                implementationClass="ru.opencart.idea.twig.OcTwigCompletionContributor"/>
+                                implementationClass="io.github.nikifalex.opencart.twig.OcTwigCompletionContributor"/>
         <psi.referenceContributor language="Twig"
-                                  implementation="ru.opencart.idea.twig.OcTwigReferenceContributor"/>
+                                  implementation="io.github.nikifalex.opencart.twig.OcTwigReferenceContributor"/>
     </extensions>
 </idea-plugin>

@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>ru.opencart.idea</id>
+    <id>io.github.nikifalex.opencart</id>
     <name>OpenCart Toolkit</name>
     <vendor url="https://t.me/t523651">nikifalex</vendor>
 
@@ -26,11 +26,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <psi.referenceContributor language="PHP"
-                                  implementation="ru.opencart.idea.reference.OcReferenceContributor"/>
+                                  implementation="io.github.nikifalex.opencart.reference.OcReferenceContributor"/>
         <codeInsight.lineMarkerProvider language="PHP"
-                                        implementationClass="ru.opencart.idea.marker.OcRouteLineMarkerProvider"/>
+                                        implementationClass="io.github.nikifalex.opencart.marker.OcRouteLineMarkerProvider"/>
         <completion.contributor language="PHP"
-                                implementationClass="ru.opencart.idea.completion.OcPhpCompletionContributor"/>
+                                implementationClass="io.github.nikifalex.opencart.completion.OcPhpCompletionContributor"/>
 
         <localInspection language="PHP"
                          shortName="OcUnknownRoute"
@@ -38,46 +38,46 @@
                          groupName="OpenCart"
                          enabledByDefault="true"
                          level="WARNING"
-                         implementationClass="ru.opencart.idea.inspection.OcUnknownRouteInspection"/>
+                         implementationClass="io.github.nikifalex.opencart.inspection.OcUnknownRouteInspection"/>
         <localInspection language="PHP"
                          shortName="OcModelNotLoaded"
                          displayName="OpenCart: model used without load->model()"
                          groupName="OpenCart"
                          enabledByDefault="true"
                          level="WARNING"
-                         implementationClass="ru.opencart.idea.inspection.OcModelNotLoadedInspection"/>
+                         implementationClass="io.github.nikifalex.opencart.inspection.OcModelNotLoadedInspection"/>
         <languageInjectionContributor language="PHP"
-                                      implementationClass="ru.opencart.idea.sql.OcSqlInjectionContributor"/>
-        <gotoSymbolContributor implementation="ru.opencart.idea.navigation.OcRouteGotoContributor"/>
+                                      implementationClass="io.github.nikifalex.opencart.sql.OcSqlInjectionContributor"/>
+        <gotoSymbolContributor implementation="io.github.nikifalex.opencart.navigation.OcRouteGotoContributor"/>
 
         <psi.referenceContributor language="XML"
-                                  implementation="ru.opencart.idea.ocmod.OcModReferenceContributor"/>
+                                  implementation="io.github.nikifalex.opencart.ocmod.OcModReferenceContributor"/>
         <codeInsight.lineMarkerProvider language="PHP"
-                                        implementationClass="ru.opencart.idea.marker.OcEventLineMarkerProvider"/>
-        <fileBasedIndex implementation="ru.opencart.idea.event.OcEventSubscriberIndex"/>
+                                        implementationClass="io.github.nikifalex.opencart.marker.OcEventLineMarkerProvider"/>
+        <fileBasedIndex implementation="io.github.nikifalex.opencart.event.OcEventSubscriberIndex"/>
         <toolWindow id="OpenCart"
                     anchor="right"
                     icon="AllIcons.Nodes.Plugin"
-                    factoryClass="ru.opencart.idea.toolwindow.OcToolWindowFactory"/>
+                    factoryClass="io.github.nikifalex.opencart.toolwindow.OcToolWindowFactory"/>
         <localInspection language="XML"
                          shortName="OcModSearch"
                          displayName="OCMOD/vQmod: modification will not apply"
                          groupName="OpenCart"
                          enabledByDefault="true"
                          level="WARNING"
-                         implementationClass="ru.opencart.idea.ocmod.OcModSearchInspection"/>
+                         implementationClass="io.github.nikifalex.opencart.ocmod.OcModSearchInspection"/>
         <localInspection language="PHP"
                          shortName="OcUnknownLanguageKey"
                          displayName="OpenCart: unknown language key"
                          groupName="OpenCart"
                          enabledByDefault="true"
                          level="WEAK WARNING"
-                         implementationClass="ru.opencart.idea.inspection.OcUnknownLanguageKeyInspection"/>
+                         implementationClass="io.github.nikifalex.opencart.inspection.OcUnknownLanguageKeyInspection"/>
     </extensions>
 
     <actions>
         <action id="OpenCart.NewModule"
-                class="ru.opencart.idea.generator.OcNewModuleAction"
+                class="io.github.nikifalex.opencart.generator.OcNewModuleAction"
                 text="OpenCart Module..."
                 description="Create an OpenCart module skeleton: controllers, language files and template">
             <add-to-group group-id="NewGroup" anchor="last"/>
@@ -86,7 +86,7 @@
     </actions>
 
     <extensions defaultExtensionNs="com.jetbrains.php">
-        <typeProvider4 implementation="ru.opencart.idea.type.OcRegistryTypeProvider"/>
-        <typeProvider4 implementation="ru.opencart.idea.type.OcModelTypeProvider"/>
+        <typeProvider4 implementation="io.github.nikifalex.opencart.type.OcRegistryTypeProvider"/>
+        <typeProvider4 implementation="io.github.nikifalex.opencart.type.OcModelTypeProvider"/>
     </extensions>
 </idea-plugin>

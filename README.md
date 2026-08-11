@@ -12,7 +12,7 @@ Think of it as Laravel Idea, but for OpenCart.
 
 ## Installation
 
-1. Download `opencart-idea-<version>.zip` from the [Releases](https://github.com/nikifalex/opencart-phpstorm-plugin/releases) page.
+1. Download `opencart-phpstorm-plugin-<version>.zip` from the [Releases](https://github.com/nikifalex/opencart-phpstorm-plugin/releases) page.
 2. In PhpStorm: `Settings → Plugins → ⚙ → Install Plugin from Disk…` and pick the archive.
 3. Restart the IDE.
 
@@ -94,7 +94,7 @@ live in a subdirectory such as `public_html/` and stores whose admin directory h
 ```bash
 ./gradlew build          # compile and test
 ./gradlew test           # 22 integration tests against synthetic OC3 and OC4 stores
-./gradlew buildPlugin    # build/distributions/opencart-idea-<version>.zip
+./gradlew buildPlugin    # build/distributions/opencart-phpstorm-plugin-<version>.zip
 ./gradlew runIde         # PhpStorm sandbox with the plugin installed
 ```
 
@@ -108,8 +108,8 @@ phpstormLocalPath=/home/user/.local/share/JetBrains/Toolbox/apps/phpstorm-2
 Installing the built archive into a local IDE by hand:
 
 ```bash
-rm -rf ~/.local/share/JetBrains/PhpStorm2026.2/opencart-idea
-unzip -o -q build/distributions/opencart-idea-0.1.0.zip -d ~/.local/share/JetBrains/PhpStorm2026.2/
+rm -rf ~/.local/share/JetBrains/PhpStorm2026.2/opencart-phpstorm-plugin
+unzip -o -q build/distributions/opencart-phpstorm-plugin-0.1.1.zip -d ~/.local/share/JetBrains/PhpStorm2026.2/
 ```
 
 Releases are cut by tag: `git tag v0.1.0 && git push origin v0.1.0`. The workflow builds the archive
