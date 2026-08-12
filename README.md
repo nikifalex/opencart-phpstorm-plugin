@@ -112,7 +112,7 @@ Installing the built archive into a local IDE by hand:
 
 ```bash
 rm -rf ~/.local/share/JetBrains/PhpStorm2026.2/opencart-phpstorm-plugin
-unzip -o -q build/distributions/opencart-phpstorm-plugin-0.1.1.zip -d ~/.local/share/JetBrains/PhpStorm2026.2/
+unzip -o -q build/distributions/opencart-phpstorm-plugin-1.1.zip -d ~/.local/share/JetBrains/PhpStorm2026.2/
 ```
 
 Releases are cut by tag: `git tag v0.1.0 && git push origin v0.1.0`. The workflow builds the archive

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.1
 
 - SQL injection in `$this->db->query()` now covers the whole concatenated query instead of each string
   separately, so a normal OpenCart query is no longer reported as broken SQL. `DB_PREFIX` is replaced
