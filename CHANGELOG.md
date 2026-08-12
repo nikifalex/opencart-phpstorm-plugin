@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- SQL injection in `$this->db->query()` now covers the whole concatenated query instead of each string
+  separately, so a normal OpenCart query is no longer reported as broken SQL. `DB_PREFIX` is replaced
+  by the table prefix from config.php, and other expressions become placeholders that keep the
+  statement parseable.
+- Queries written with interpolation (`"select * from {$table} where id = " . (int)$id`) keep their
+  highlighting as well: the interpolated parts become placeholders chosen by their position, so a
+  table name reads as a name and a value as a bound parameter.
+- With several stores in one project each query uses the prefix of the installation its file belongs
+  to, rather than whichever `DB_PREFIX` the index happens to resolve.
+
 ## 0.1.1
 
 - Renamed the plugin id, the Kotlin package and the Gradle project to match the repository name:

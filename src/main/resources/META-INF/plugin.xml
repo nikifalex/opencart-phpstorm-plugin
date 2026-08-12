@@ -46,8 +46,7 @@
                          enabledByDefault="true"
                          level="WARNING"
                          implementationClass="io.github.nikifalex.opencart.inspection.OcModelNotLoadedInspection"/>
-        <languageInjectionContributor language="PHP"
-                                      implementationClass="io.github.nikifalex.opencart.sql.OcSqlInjectionContributor"/>
+        <multiHostInjector implementation="io.github.nikifalex.opencart.sql.OcSqlInjector"/>
         <gotoSymbolContributor implementation="io.github.nikifalex.opencart.navigation.OcRouteGotoContributor"/>
 
         <psi.referenceContributor language="XML"

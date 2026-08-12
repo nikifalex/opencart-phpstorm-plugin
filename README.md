@@ -83,7 +83,10 @@ live in a subdirectory such as `public_html/` and stores whose admin directory h
 
 ### Also
 
-- SQL highlighting inside `$this->db->query(...)`.
+- SQL highlighting inside `$this->db->query(...)`: the concatenation is glued into one statement, with
+  `DB_PREFIX` taken from config.php and the remaining expressions shown as placeholders. Needs the
+  bundled **Database Tools and SQL** plugin — with it disabled there is no SQL language to inject and
+  the queries stay plain strings.
 - Generator: **Tools → New OpenCart Module…** creates an admin controller with settings saving, a
   template, language files for every language and the catalog part — laid out for the store version
   (`extension/<code>/` for 4.x, `admin/controller/extension/module/` for 2.3/3.x, `module/` for
@@ -93,7 +96,7 @@ live in a subdirectory such as `public_html/` and stores whose admin directory h
 
 ```bash
 ./gradlew build          # compile and test
-./gradlew test           # 22 integration tests against synthetic OC3 and OC4 stores
+./gradlew test           # 43 integration tests against synthetic OC3 and OC4 stores
 ./gradlew buildPlugin    # build/distributions/opencart-phpstorm-plugin-<version>.zip
 ./gradlew runIde         # PhpStorm sandbox with the plugin installed
 ```

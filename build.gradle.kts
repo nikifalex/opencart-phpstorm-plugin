@@ -35,7 +35,9 @@ dependencies {
         } else {
             phpstorm(providers.gradleProperty("phpstormVersion").get())
         }
-        bundledPlugins("com.jetbrains.php", "com.jetbrains.twig")
+        // Database Tools is here for the tests: it provides the SQL language injected into db->query().
+        // The plugin does not depend on it — without SQL support the injection simply stays off.
+        bundledPlugins("com.jetbrains.php", "com.jetbrains.twig", "com.intellij.database")
         testFramework(TestFrameworkType.Platform)
     }
     testImplementation("junit:junit:4.13.2")

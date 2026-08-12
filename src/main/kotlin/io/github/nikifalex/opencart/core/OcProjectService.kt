@@ -7,6 +7,7 @@ import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiManager
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
 import java.nio.charset.StandardCharsets
@@ -29,11 +30,15 @@ class OcProjectService(private val project: Project) {
         fun getInstance(project: Project): OcProjectService = project.service()
 
         private const val MAX_SCAN_DEPTH = 3
+        private const val DEFAULT_DB_PREFIX = "oc_"
         private val SKIP_DIRS = setOf(
             "vendor", "node_modules", ".git", ".idea", "image", "storage", "cache",
             "download", "logs", "log", "upload", "backup",
         )
         private val NOT_APP_DIRS = setOf("system", "install", "catalog", "vendor", "extension")
+
+        private val DB_PREFIX_DEFINE = Regex("""define\s*\(\s*['"]DB_PREFIX['"]\s*,\s*['"]([^'"]*)['"]""")
+        private val VERSION_DEFINE = Regex("""define\s*\(\s*['"]VERSION['"]\s*,\s*['"]([^'"]+)['"]""")
     }
 
     /** Every OpenCart installation in the project. */
@@ -65,6 +70,27 @@ class OcProjectService(private val project: Project) {
     }
 
     fun isOpenCartProject(): Boolean = roots().isNotEmpty()
+
+    /**
+     * Table prefix of the installation: `define('DB_PREFIX', 'oc_')` from config.php.
+     *
+     * A store without config.php is a fresh checkout rather than a broken one, so the default of the
+     * installer is used instead of giving up.
+     *
+     * The answer is cached on the PSI of config.php and recomputed when the file is edited. This runs
+     * inside the SQL injector, that is on every literal of every query on every highlighting pass, so
+     * the uncached path must not read anything from disk.
+     */
+    fun dbPrefix(root: OcRoot): String {
+        val config = root.dir.findChild("config.php") ?: return DEFAULT_DB_PREFIX
+        val psi = PsiManager.getInstance(project).findFile(config) ?: return DEFAULT_DB_PREFIX
+        return CachedValuesManager.getCachedValue(psi) {
+            CachedValueProvider.Result.create(parseDbPrefix(psi.text), psi)
+        }
+    }
+
+    private fun parseDbPrefix(text: String): String =
+        DB_PREFIX_DEFINE.find(text)?.groupValues?.get(1) ?: DEFAULT_DB_PREFIX
 
     // --- detection ------------------------------------------------------------
 
@@ -138,9 +164,7 @@ class OcProjectService(private val project: Project) {
     /** define('VERSION', '3.0.3.8') taken from index.php of the store root. */
     private fun versionConstant(root: VirtualFile): String? {
         val index = root.findChild("index.php") ?: return null
-        val text = readHead(index, 8192)
-        val m = Regex("""define\s*\(\s*['"]VERSION['"]\s*,\s*['"]([^'"]+)['"]""").find(text) ?: return null
-        return m.groupValues[1]
+        return VERSION_DEFINE.find(readHead(index, 8192))?.groupValues?.get(1)
     }
 
     private fun readHead(file: VirtualFile, limit: Int): String = try {
